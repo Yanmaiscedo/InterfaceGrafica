@@ -4,6 +4,8 @@
  */
 package trabalhoindividual;
 
+import trabalhoindividual.view.JanelaPrincipal;
+
 /**
  *
  * @author yanma
@@ -15,6 +17,10 @@ public class TrabalhoIndividual {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        JanelaPrincipal janelaPrincipal = new JanelaPrincipal();
+        janelaPrincipal.setVisible(true);
+        
     }
     
 }
