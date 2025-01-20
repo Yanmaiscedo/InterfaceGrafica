@@ -98,7 +98,15 @@ public class Progresso extends javax.swing.JInternalFrame {
             new String [] {
                 "Importância", "Nome", "Descrição", "Tipo", "Data Final"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(TabelaTarefa);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

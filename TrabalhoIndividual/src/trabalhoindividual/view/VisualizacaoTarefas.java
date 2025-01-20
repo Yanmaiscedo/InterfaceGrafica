@@ -4,7 +4,7 @@
  */
 package trabalhoindividual.view;
 
-//import trabalhoindividual.view.JanelaPrincipal;
+import trabalhoindividual.view.JanelaPrincipal;
 
 /**
  *
@@ -34,7 +34,7 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
         toJanelaTarefas = new javax.swing.JButton();
         toJanelaPrincipal = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         TabelaTarefa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -43,7 +43,15 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
             new String [] {
                 "Importância", "Nome", "Descrição", "Tipo", "Data Final"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(TabelaTarefa);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -82,12 +90,10 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
                         .addComponent(toJanelaPrincipal)
                         .addGap(18, 18, 18)
                         .addComponent(toJanelaTarefas)
@@ -125,6 +131,9 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
         JanelaPrincipal janelaPrincipal = new JanelaPrincipal();
         janelaPrincipal.setVisible(true);
         dispose();
+        
+        //passar uma referencia, se a janela principal ja tiver aberta, so fechar essa janela, se nao, criar uma outra janela
+        
     }//GEN-LAST:event_toJanelaPrincipalActionPerformed
 
     /**
