@@ -39,7 +39,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(950, 780));
 
         javax.swing.GroupLayout PaneLayout = new javax.swing.GroupLayout(Pane);
@@ -128,7 +128,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         //Janela de visualização de Tarefas
         VisualizacaoTarefas VT = new VisualizacaoTarefas();
         VT.setVisible(true);
-        dispose();
+        //dispose();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed

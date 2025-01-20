@@ -5,6 +5,8 @@
 package trabalhoindividual.view;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -17,6 +19,10 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
      */
     public JanelaTarefa() {
         initComponents();
+        
+        DefaultTableModel modelo = (DefaultTableModel) TabelaTarefa.getModel();
+        TabelaTarefa.setRowSorter(new TableRowSorter(modelo));
+        
     }
 
     /**
@@ -60,10 +66,25 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
         jLabel5.setText("Data para Conclusão");
 
         Gravar.setText("Gravar");
+        Gravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GravarActionPerformed(evt);
+            }
+        });
 
         Alterar.setText("Alterar");
+        Alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AlterarActionPerformed(evt);
+            }
+        });
 
         Excluir.setText("Excluir");
+        Excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExcluirActionPerformed(evt);
+            }
+        });
 
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,6 +196,16 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        TabelaTarefa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaTarefaMouseClicked(evt);
+            }
+        });
+        TabelaTarefa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TabelaTarefaKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelaTarefa);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -217,6 +248,72 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
     private void FtxtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FtxtDataActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FtxtDataActionPerformed
+
+    private void GravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GravarActionPerformed
+        // TODO add your handling code here:
+        
+        DefaultTableModel dtmTarefas = (DefaultTableModel)TabelaTarefa.getModel();
+        Object[] dados = {CBImportancia.getSelectedItem(),txtNome.getText(),txtDescricao.getText(),CBTipo.getSelectedItem(),FtxtData.getText()};
+        dtmTarefas.addRow(dados);
+        
+    }//GEN-LAST:event_GravarActionPerformed
+
+    private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
+        // TODO add your handling code here:
+        
+        if(TabelaTarefa.getSelectedRow() != -1){
+            DefaultTableModel dtmTarefas = (DefaultTableModel)TabelaTarefa.getModel();
+            dtmTarefas.removeRow(TabelaTarefa.getSelectedRow());
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione uma Tarefa para excluir.");
+        }
+    }//GEN-LAST:event_ExcluirActionPerformed
+
+    private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
+        // TODO add your handling code here:
+        
+        if(TabelaTarefa.getSelectedRow() != -1){
+            
+            TabelaTarefa.setValueAt(CBImportancia.getSelectedItem(), TabelaTarefa.getSelectedRow(), 0);
+            TabelaTarefa.setValueAt(txtNome.getText(), TabelaTarefa.getSelectedRow(), 1);
+            TabelaTarefa.setValueAt(txtDescricao.getText(), TabelaTarefa.getSelectedRow(), 2);
+            TabelaTarefa.setValueAt(CBTipo.getSelectedItem(), TabelaTarefa.getSelectedRow(), 3);
+            TabelaTarefa.setValueAt(FtxtData.getText(), TabelaTarefa.getSelectedRow(), 4);
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione uma Tarefa para Alterar.");
+        }
+        
+    }//GEN-LAST:event_AlterarActionPerformed
+
+    private void TabelaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaTarefaMouseClicked
+        // TODO add your handling code here:
+        
+        if(TabelaTarefa.getSelectedRow() != -1){
+            
+            CBImportancia.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 0).toString());
+            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 1).toString());
+            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
+            CBTipo.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
+            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 4).toString());
+            
+        }
+        
+    }//GEN-LAST:event_TabelaTarefaMouseClicked
+
+    private void TabelaTarefaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TabelaTarefaKeyReleased
+        // TODO add your handling code here:
+        
+        if(TabelaTarefa.getSelectedRow() != -1){
+            
+            CBImportancia.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 0).toString());
+            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 1).toString());
+            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
+            CBTipo.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
+            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 4).toString());
+            
+        }
+        
+    }//GEN-LAST:event_TabelaTarefaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
