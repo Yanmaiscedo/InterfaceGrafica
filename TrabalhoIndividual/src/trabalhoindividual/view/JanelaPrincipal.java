@@ -42,6 +42,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(950, 780));
 
+        Pane.setBackground(new java.awt.Color(153, 153, 153));
+
         javax.swing.GroupLayout PaneLayout = new javax.swing.GroupLayout(Pane);
         Pane.setLayout(PaneLayout);
         PaneLayout.setHorizontalGroup(
