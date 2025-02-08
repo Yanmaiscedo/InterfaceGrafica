@@ -7,6 +7,8 @@ package trabalhoindividual.view;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import model.bean.Tarefa;
+import model.dao.TarefaDAO;
 
 /**
  *
@@ -19,10 +21,29 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
      */
     public JanelaTarefa() {
         initComponents();
-        
+
         DefaultTableModel modelo = (DefaultTableModel) TabelaTarefa.getModel();
         TabelaTarefa.setRowSorter(new TableRowSorter(modelo));
-        
+
+        readJTable();
+    }
+
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) TabelaTarefa.getModel();
+        modelo.setNumRows(0);
+        TarefaDAO tdao = new TarefaDAO();
+        for (Tarefa t : tdao.read()) {
+            modelo.addRow(new Object[]{
+                t.getId(),
+                t.getEstado(),
+                t.getImportancia(),
+                t.getNome(),
+                t.getDescricao(),
+                t.getTipo(),
+                t.getDatafinal()
+            });
+        }
+
     }
 
     /**
@@ -48,12 +69,17 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
         CBTipo = new javax.swing.JComboBox<>();
         CBImportancia = new javax.swing.JComboBox<>();
         FtxtData = new javax.swing.JFormattedTextField();
+        CBEstado = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaTarefa = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(204, 204, 204));
         setClosable(true);
         setTitle("Janela de Gerenciamento de Tarefas");
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setText("Nome");
 
@@ -113,43 +139,48 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
             }
         });
 
+        CBEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecionar", "Concluido", "Não Concluido" }));
+
+        jLabel6.setText("Estado");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(CBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addContainerGap(36, Short.MAX_VALUE))
+                            .addComponent(CBImportancia, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(FtxtData, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(CBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Excluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Alterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Gravar)
-                        .addGap(56, 56, 56))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(CBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CBImportancia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(44, 44, 44)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(FtxtData))
-                        .addGap(105, 105, 105))))
+                        .addComponent(Gravar)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,12 +197,14 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CBImportancia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FtxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(FtxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Gravar)
@@ -185,11 +218,11 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Importância", "Nome", "Descrição", "Tipo", "Data Final"
+                "ID", "Estado", "Importância", "Nome", "Descrição", "Tipo", "Data Final"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -207,6 +240,11 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane1.setViewportView(TabelaTarefa);
+        if (TabelaTarefa.getColumnModel().getColumnCount() > 0) {
+            TabelaTarefa.getColumnModel().getColumn(0).setMinWidth(0);
+            TabelaTarefa.getColumnModel().getColumn(0).setPreferredWidth(0);
+            TabelaTarefa.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -252,72 +290,126 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
     private void GravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GravarActionPerformed
         // TODO add your handling code here:
         
-        DefaultTableModel dtmTarefas = (DefaultTableModel)TabelaTarefa.getModel();
-        Object[] dados = {CBImportancia.getSelectedItem(),txtNome.getText(),txtDescricao.getText(),CBTipo.getSelectedItem(),FtxtData.getText()};
-        dtmTarefas.addRow(dados);
         
+        Tarefa t = new Tarefa();
+        TarefaDAO dao = new TarefaDAO();
+        t.setEstado((String) CBEstado.getSelectedItem());
+        t.setImportancia((String) CBImportancia.getSelectedItem());
+        t.setNome(txtNome.getText());
+        t.setDescricao(txtDescricao.getText());
+        t.setTipo((String) CBTipo.getSelectedItem());
+        t.setDatafinal(FtxtData.getText());
+        dao.create(t);
+        
+        txtNome.setText("");
+        txtDescricao.setText("");
+        CBTipo.setSelectedItem("Selecionar");
+        CBImportancia.setSelectedItem("Selecionar");
+        CBEstado.setSelectedItem("Selecionar");
+        FtxtData.setText("");
+        txtNome.requestFocus();
+
+        readJTable();
+
+        //DefaultTableModel dtmTarefas = (DefaultTableModel)TabelaTarefa.getModel();
+        //Object[] dados = {CBImportancia.getSelectedItem(),txtNome.getText(),txtDescricao.getText(),CBTipo.getSelectedItem(),FtxtData.getText()};
+        //dtmTarefas.addRow(dados);
+
     }//GEN-LAST:event_GravarActionPerformed
 
     private void ExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExcluirActionPerformed
         // TODO add your handling code here:
-        
-        if(TabelaTarefa.getSelectedRow() != -1){
-            DefaultTableModel dtmTarefas = (DefaultTableModel)TabelaTarefa.getModel();
-            dtmTarefas.removeRow(TabelaTarefa.getSelectedRow());
-        }else{
+
+        if (TabelaTarefa.getSelectedRow() != -1) {
+            
+            Tarefa t = new Tarefa();
+            TarefaDAO dao = new TarefaDAO();
+
+            t.setId((int)TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 0));
+            dao.delete(t);
+
+            txtNome.setText("");
+            txtDescricao.setText("");
+            CBTipo.setSelectedItem("Selecionar");
+            CBImportancia.setSelectedItem("Selecionar");
+            CBEstado.setSelectedItem("Selecionar");
+            FtxtData.setText("");
+            txtNome.requestFocus();
+
+            readJTable();
+            
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma Tarefa para excluir.");
         }
     }//GEN-LAST:event_ExcluirActionPerformed
 
     private void AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlterarActionPerformed
         // TODO add your handling code here:
-        
-        if(TabelaTarefa.getSelectedRow() != -1){
-            
-            TabelaTarefa.setValueAt(CBImportancia.getSelectedItem(), TabelaTarefa.getSelectedRow(), 0);
-            TabelaTarefa.setValueAt(txtNome.getText(), TabelaTarefa.getSelectedRow(), 1);
-            TabelaTarefa.setValueAt(txtDescricao.getText(), TabelaTarefa.getSelectedRow(), 2);
-            TabelaTarefa.setValueAt(CBTipo.getSelectedItem(), TabelaTarefa.getSelectedRow(), 3);
-            TabelaTarefa.setValueAt(FtxtData.getText(), TabelaTarefa.getSelectedRow(), 4);
-        }else{
+
+        if (TabelaTarefa.getSelectedRow() != -1) {
+
+            Tarefa t = new Tarefa();
+            TarefaDAO dao = new TarefaDAO();
+            t.setEstado((String) CBEstado.getSelectedItem());
+            t.setImportancia((String) CBImportancia.getSelectedItem());
+            t.setNome(txtNome.getText());
+            t.setDescricao(txtDescricao.getText());
+            t.setTipo((String) CBTipo.getSelectedItem());
+            t.setDatafinal(FtxtData.getText());
+            t.setId((int)TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 0));
+            dao.update(t);
+
+            txtNome.setText("");
+            txtDescricao.setText("");
+            CBTipo.setSelectedItem("Selecionar");
+            CBImportancia.setSelectedItem("Selecionar");
+            CBEstado.setSelectedItem("Selecionar");
+            FtxtData.setText("");
+            txtNome.requestFocus();
+
+            readJTable();
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma Tarefa para Alterar.");
         }
-        
+
     }//GEN-LAST:event_AlterarActionPerformed
 
     private void TabelaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaTarefaMouseClicked
         // TODO add your handling code here:
-        
-        if(TabelaTarefa.getSelectedRow() != -1){
-            
-            CBImportancia.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 0).toString());
-            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 1).toString());
-            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
-            CBTipo.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
-            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 4).toString());
-            
+
+        if (TabelaTarefa.getSelectedRow() != -1) {
+
+            CBEstado.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 1).toString());
+            CBImportancia.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
+            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
+            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 4).toString());
+            CBTipo.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 5).toString());
+            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 6).toString());
+
         }
-        
+
     }//GEN-LAST:event_TabelaTarefaMouseClicked
 
     private void TabelaTarefaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TabelaTarefaKeyReleased
         // TODO add your handling code here:
-        
-        if(TabelaTarefa.getSelectedRow() != -1){
-            
-            CBImportancia.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 0).toString());
-            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 1).toString());
-            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
-            CBTipo.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
-            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 4).toString());
-            
+
+        if (TabelaTarefa.getSelectedRow() != -1) {
+
+            CBEstado.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 1).toString());
+            CBImportancia.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
+            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
+            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 4).toString());
+            CBTipo.setSelectedItem(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 5).toString());
+            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 6).toString());
+
         }
-        
+
     }//GEN-LAST:event_TabelaTarefaKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Alterar;
+    private javax.swing.JComboBox<String> CBEstado;
     private javax.swing.JComboBox<String> CBImportancia;
     private javax.swing.JComboBox<String> CBTipo;
     private javax.swing.JButton Excluir;
@@ -329,6 +421,7 @@ public class JanelaTarefa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
