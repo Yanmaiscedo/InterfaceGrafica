@@ -5,6 +5,12 @@
 package trabalhoindividual.view;
 
 import trabalhoindividual.view.JanelaPrincipal;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import model.bean.Tarefa;
+import model.dao.TarefaDAO;
+
 
 /**
  *
@@ -17,6 +23,28 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
      */
     public VisualizacaoTarefas() {
         initComponents();
+        
+        DefaultTableModel modelo = (DefaultTableModel) TabelaTarefa.getModel();
+        TabelaTarefa.setRowSorter(new TableRowSorter(modelo));
+        
+        readJTable();
+    }
+    
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) TabelaTarefa.getModel();
+        modelo.setNumRows(0);
+        TarefaDAO tdao = new TarefaDAO();
+        for (Tarefa t : tdao.read()) {
+            modelo.addRow(new Object[]{
+                t.getEstado(),
+                t.getImportancia(),
+                t.getNome(),
+                t.getDescricao(),
+                t.getTipo(),
+                t.getDatafinal()
+            });
+        }
+
     }
 
     /**
@@ -33,23 +61,42 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
         TabelaTarefa = new javax.swing.JTable();
         toJanelaTarefas = new javax.swing.JButton();
         toJanelaPrincipal = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDescricao = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtNome = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        FtxtData = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Visualização de Tarefas");
+        setBackground(new java.awt.Color(153, 153, 153));
 
         TabelaTarefa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Importância", "Nome", "Descrição", "Tipo", "Data Final"
+                "Estado", "Importância", "Nome", "Descrição", "Tipo", "Data Final"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                true, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        TabelaTarefa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelaTarefaMouseClicked(evt);
+            }
+        });
+        TabelaTarefa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TabelaTarefaKeyReleased(evt);
             }
         });
         jScrollPane1.setViewportView(TabelaTarefa);
@@ -85,30 +132,77 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
             }
         });
 
+        txtDescricao.setColumns(20);
+        txtDescricao.setRows(5);
+        txtDescricao.setToolTipText("");
+        txtDescricao.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtDescricao.setMaximumSize(new java.awt.Dimension(21, 21));
+        jScrollPane2.setViewportView(txtDescricao);
+
+        jLabel1.setText("Nome");
+
+        jLabel2.setText("Data");
+
+        jLabel3.setText("Descrição");
+
+        try {
+            FtxtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(toJanelaPrincipal)
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(toJanelaPrincipal)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(toJanelaTarefas)
-                        .addGap(22, 22, 22)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(FtxtData, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toJanelaTarefas)
-                    .addComponent(toJanelaPrincipal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(35, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(toJanelaTarefas)
+                            .addComponent(toJanelaPrincipal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FtxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addGap(4, 4, 4)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -135,6 +229,30 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
         //passar uma referencia, se a janela principal ja tiver aberta, so fechar essa janela, se nao, criar uma outra janela
         
     }//GEN-LAST:event_toJanelaPrincipalActionPerformed
+
+    private void TabelaTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelaTarefaMouseClicked
+        // TODO add your handling code here:
+        
+        if (TabelaTarefa.getSelectedRow() != -1) {
+
+            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
+            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
+            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 5).toString());
+
+        }
+    }//GEN-LAST:event_TabelaTarefaMouseClicked
+
+    private void TabelaTarefaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TabelaTarefaKeyReleased
+        // TODO add your handling code here:
+        
+        if (TabelaTarefa.getSelectedRow() != -1) {
+
+            txtNome.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 2).toString());
+            txtDescricao.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 3).toString());
+            FtxtData.setText(TabelaTarefa.getValueAt(TabelaTarefa.getSelectedRow(), 5).toString());
+
+        }
+    }//GEN-LAST:event_TabelaTarefaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -172,10 +290,17 @@ public class VisualizacaoTarefas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField FtxtData;
     private javax.swing.JTable TabelaTarefa;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton toJanelaPrincipal;
     private javax.swing.JButton toJanelaTarefas;
+    private javax.swing.JTextArea txtDescricao;
+    private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
 }
