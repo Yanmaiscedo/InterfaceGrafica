@@ -55,30 +55,30 @@ public class Progresso extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtTarefasRealizadas = new javax.swing.JTextField();
-        txtTarefasTotais = new javax.swing.JTextField();
         SDesempenho = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        teste = new javax.swing.JFormattedTextField();
+        teste2 = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaTarefa = new javax.swing.JTable();
 
         setClosable(true);
 
-        txtTarefasRealizadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTarefasRealizadasActionPerformed(evt);
-            }
-        });
-
+        SDesempenho.setEnabled(false);
         SDesempenho.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 SDesempenhoCaretPositionChanged(evt);
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        SDesempenho.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                SDesempenhoPropertyChange(evt);
             }
         });
 
@@ -92,6 +92,20 @@ public class Progresso extends javax.swing.JInternalFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        teste.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        teste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                testeActionPerformed(evt);
+            }
+        });
+
+        teste2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        teste2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                teste2ActionPerformed(evt);
             }
         });
 
@@ -109,37 +123,37 @@ public class Progresso extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SDesempenho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtTarefasRealizadas))
+                                    .addComponent(teste))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtTarefasTotais)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))))))
-                .addGap(67, 67, 67))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(teste2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(SDesempenho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(57, 57, 57))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTarefasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTarefasTotais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(teste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(teste2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)))
                 .addComponent(SDesempenho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -166,7 +180,7 @@ public class Progresso extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,25 +208,21 @@ public class Progresso extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTarefasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTarefasRealizadasActionPerformed
-        // TODO add your handling code here:
-        int concluido = 0;
-
-        TarefaDAO tdao = new TarefaDAO();
-        for (Tarefa t : tdao.read()) {
-            if("Concluída".equalsIgnoreCase(t.getEstado())) {
-                concluido++;
-            } 
-        }
-        String nTarefas = Integer.toString(concluido);
-        txtTarefasRealizadas.setText(nTarefas);
-    }//GEN-LAST:event_txtTarefasRealizadasActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
         TarefaDAO dao = new TarefaDAO();
         dao.contador();
+        
+        JOptionPane.showMessageDialog(null, 
+                "Tarefas Concluídas: " + dao.concluido + "\nTarefas Não Concluídas: " + dao.naoConcluido);
+        
+        teste.setValue(dao.getconcluido());
+        teste2.setValue(dao.gettotal());
+        
+        readJTable();
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void SDesempenhoCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_SDesempenhoCaretPositionChanged
@@ -221,7 +231,39 @@ public class Progresso extends javax.swing.JInternalFrame {
         SDesempenho.getValue(Integer.valueOf(txtTarefasRealizadas));
         txtTarefasRealizadas.setText(String.valueOf(SDesempenho.getValue());
         */
+        TarefaDAO dao = new TarefaDAO();
+        dao.contador();
+        teste.setValue(dao.getconcluido());
+        
     }//GEN-LAST:event_SDesempenhoCaretPositionChanged
+
+    private void SDesempenhoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_SDesempenhoPropertyChange
+        // TODO add your handling code here:
+        TarefaDAO dao = new TarefaDAO();
+        
+        SDesempenho.setMaximum(dao.gettotal());
+        SDesempenho.setValue(dao.getconcluido());
+        
+        teste.setValue(dao.getconcluido());
+        teste2.setValue(dao.gettotal());
+        
+    }//GEN-LAST:event_SDesempenhoPropertyChange
+
+    private void testeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testeActionPerformed
+        // TODO add your handling code here:
+        TarefaDAO dao = new TarefaDAO();
+        dao.contador();
+        
+        teste.setValue(dao.getconcluido());
+    }//GEN-LAST:event_testeActionPerformed
+
+    private void teste2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teste2ActionPerformed
+        // TODO add your handling code here:
+        TarefaDAO dao = new TarefaDAO();
+        dao.contador();
+
+        teste2.setValue(dao.gettotal());
+    }//GEN-LAST:event_teste2ActionPerformed
 
     
 
@@ -237,7 +279,11 @@ public class Progresso extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtTarefasRealizadas;
-    private javax.swing.JTextField txtTarefasTotais;
+    private javax.swing.JFormattedTextField teste;
+    private javax.swing.JFormattedTextField teste2;
     // End of variables declaration//GEN-END:variables
+
+    private String String(int concluido) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

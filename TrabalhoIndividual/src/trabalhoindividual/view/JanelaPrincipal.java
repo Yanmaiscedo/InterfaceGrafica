@@ -13,12 +13,12 @@ import javax.swing.JOptionPane;
  * @author yanma
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
-
     /**
      * Creates new form JanelaPrincipal
      */
     public JanelaPrincipal() {
         initComponents();
+        
     }
 
     /**
@@ -40,7 +40,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(950, 780));
+        setPreferredSize(new java.awt.Dimension(1250, 790));
 
         Pane.setBackground(new java.awt.Color(153, 153, 153));
 
